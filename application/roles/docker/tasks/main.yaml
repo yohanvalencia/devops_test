@@ -1,0 +1,18 @@
+---
+
+  - name: copy docker files to create the images
+    copy:
+      src:  ./files/
+      dest: /home/ec2-user/
+      owner: ec2-user
+      group: ec2-user
+      mode: 0644
+
+  - name: build docker image in remote server [golang server]
+    command: docker image build -t server-holded:1.0 golang/
+
+  - name: build docker image in remote server [rev proxy]
+    command: docker image build -t nginx-holded:1.0 nginx/
+
+  - name: deploy stack with docker swarm
+    command: docker stack deploy -c docker-compose.yaml holded
