@@ -1,12 +1,12 @@
-package main
+package server
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
+
 	"github.com/yvalencia91/devops_test/tree/main/application/roles/docker/files/golang/client"
 )
 
@@ -43,17 +43,18 @@ func getComments(ctx context.Context) func(w http.ResponseWriter, r *http.Reques
 	}
 }
 
-func main() {
+type Server struct {
+	http.Handler
+}
+
+func NewServer() *Server {
 	ctx := context.Background()
+	server := new(Server)
+	router := http.NewServeMux()
+	router.HandleFunc("/", appHandler)
+	router.HandleFunc("/_healthcheck", healthCheck)
+	router.HandleFunc("/external", getComments(ctx))
 
-	http.HandleFunc("/", appHandler)
-	http.HandleFunc("/_healthcheck", healthCheck)
-	http.HandleFunc("/external", getComments(ctx))
-
-	log.Println("Started, serving on port 8080")
-	err := http.ListenAndServe(":8080", nil)
-
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	server.Handler = router
+	return server
 }
