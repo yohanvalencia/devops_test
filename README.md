@@ -18,3 +18,12 @@ the new instances is appended into the ansible inventory.
 ```
 ansible-playbook holded_test.yaml
 ```
+
+## 2.2 Application (Coding)
+
+I created two endpoints with the following path:
+
+```
+/_healthcheck
+/external
+```
