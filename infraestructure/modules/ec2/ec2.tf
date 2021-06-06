@@ -70,7 +70,16 @@ resource "aws_instance" "ec2" {
   availability_zone      = var.region_and_az
   instance_type          = var.instanceType
   key_name               = var.keyName
-
+  user_data = <<-EOF
+              #! /bin/bash
+              sudo yum update -y
+              sudo amazon-linux-extras install docker -y
+              sudo service docker start
+              sudo usermod -a -G docker ec2-user
+              sudo systemctl enable docker.service
+              sudo reboot
+              EOF
+  
   tags = {
     Name = var.commonTag
   }
