@@ -13,6 +13,13 @@ terraform {
 #the fact that can be used in a repeatable way. This can also be
 #deployed directly from the github project url.
 
-module "goEC2" {
-  source="./modules/ec2"
+module "ec2" {
+  source           = "./modules/ec2"
+  private_key_path = "../holded.pem"
+  ansible_hosts    = "../application/holded"
+}
+
+output "public_dns" {
+  description = "Outputs the public IP of the instance"
+  value       = module.ec2.public_dns
 }

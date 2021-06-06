@@ -78,9 +78,23 @@ resource "aws_instance" "ec2" {
               sudo usermod -a -G docker ec2-user
               sudo systemctl enable docker.service
               sudo docker swarm init
-              sudo reboot
               EOF
   
+  provisioner "remote-exec" {
+    inline = ["echo 'Wait until SSH is ready'"]
+
+    connection {
+      type        = "ssh"
+      user        = var.ssh_user
+      private_key = file(var.private_key_path)
+      host        = aws_instance.ec2.public_ip
+    }
+  }
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.ec2.public_ip} >> ${var.ansible_hosts}"
+  }
+
+
   tags = {
     Name = var.commonTag
   }
