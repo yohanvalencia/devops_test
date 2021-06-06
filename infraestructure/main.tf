@@ -20,6 +20,6 @@ module "ec2" {
 }
 
 output "public_dns" {
-  description = "Outputs the public IP of the instance"
+  description = "Outputs the DNS of the instance"
   value       = module.ec2.public_dns
 }
