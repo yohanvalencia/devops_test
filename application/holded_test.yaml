@@ -13,10 +13,10 @@
       mode: 0644
 
   - name: build docker image in remote server [golang server]
-    command: sudo docker image build -t server-holded:1.0 golang/
+    command: docker image build -t server-holded:1.0 golang/
 
   - name: build docker image in remote server [rev proxy]
-    command: sudo docker image build -t nginx-holded:1.0 nginx/
+    command: docker image build -t nginx-holded:1.0 nginx/
 
   - name: deploy stack with docker swarm
-    command: sudo docker stack deploy -c docker-compose.yaml holded
+    command: docker stack deploy -c docker-compose.yaml holded
