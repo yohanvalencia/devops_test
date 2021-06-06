@@ -77,6 +77,7 @@ resource "aws_instance" "ec2" {
               sudo service docker start
               sudo usermod -a -G docker ec2-user
               sudo systemctl enable docker.service
+              sudo docker swarm init
               sudo reboot
               EOF
   
