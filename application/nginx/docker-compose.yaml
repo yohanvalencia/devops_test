@@ -1,0 +1,10 @@
+version: "3.2"
+services:
+    server:
+        image: server-holded:1.0
+    
+    revproxy:
+        image: nginx-holded:1.0
+        ports:
+            - 80:80
+            - 443:443
