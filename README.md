@@ -24,8 +24,8 @@ ansible-playbook holded_test.yaml
 I created two endpoints with the following path:
 
 ```
-/_healthcheck
-/external
+/api/_healthcheck
+/api/external
 ```
 
 ## Final thoughts
